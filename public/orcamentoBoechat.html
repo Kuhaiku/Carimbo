@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOECHAT INFORMÁTICA</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 0.5;
+            
+        }
+        .header, .footer {
+            text-align: right;
+            padding: 10px;
+            
+        }
+        h1{
+            background-color: red;
+            padding: 10px;
+        }
+        .header p {
+            text-align: right;
+            padding-left: 10%;
+        }
+        .header img {
+            max-height: 80px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .conditions {
+            margin-left: 50px;
+        }
+        .conditions, .table-section, .footer {
+            margin-top: 20px;
+        }
+        table {
+            margin: auto;
+            width: 80%;
+            
+            
+        }
+        table, th, td {
+            border: 1px solid, black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 40px;
+            position: relative;
+        }
+        .footer-text {
+            text-align: right;
+            margin-right: 120px;
+        }
+        .stamp-space {
+            text-align: right;
+        }
+        .stamp-space img {
+            max-height: 150px;
+            margin-right: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>BOECHAT INFORMÁTICA</h1>
+        <strong>
+        <p>RUA RAINHA ELISABETH, 16 QUADRA 02</p>
+        <p>RIO DO LIMÃO – ARARUAMA – RJ CEP: 28981-120</p>
+        <p>CNPJ:04.678.648/0001-72
+        </p>
+        </strong>
+    </div>
+    <div class="content">
+        <div class="conditions">
+            <p><strong>Valor Total:</strong> <span id="totalValue">R$ 0,00</span></p>
+            <p><strong>Condições de Pagamento:</strong> À vista</p>
+            <p><strong>Prazo de Entrega:</strong> Imediato</p>
+            <p><strong>Validade do Orçamento:</strong> 30 dias</p>
+        </div>
+        
+    <h2>Orçamento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Valor Unt.</th>
+                <th>Vl. Total</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <!-- Itens serão carregados aqui -->
+        </tbody>
+    </table>
+    </div>
+
+    <div class="footer-text">
+        <p><strong>Araruama, <span id="formattedDate"></span></strong></p>
+    </div>
+    <div class="stamp-space">
+        <img src="./carimbos/boechat.jpg" alt="Carimbo">
+    </div>
+    
+    <script>
+        // Recupera a data do localStorage
+        const budgetDate = localStorage.getItem('budgetDate');
+        if (budgetDate) {
+            document.getElementById('formattedDate').textContent = budgetDate;
+        }
+    </script>
+    
+
+    <script src="/scriptorc.js"></script>
+</body>
+</html>

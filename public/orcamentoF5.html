@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F5 Consultoria e Soluções</title>
+    <style>
+        body {
+
+            margin: 0;
+            padding: 0;
+        }
+        .header, .footer {
+            text-align: end;
+            margin-right: 120px;
+            font-family: 'Courier New', Courier, monospace;
+            
+        }
+        .header p {
+            text-align: end;
+            
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .header img {
+            max-height: 80px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .conditions {
+            margin-left: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .conditions, .table-section, .footer {
+            margin-top: 20px;
+        }
+        table {
+            background-color: darkolivegreen;
+            width: 100%;
+        }
+        table, th, td {
+            color: aliceblue;
+            
+        }
+        th, td {
+            text-align: center;
+            
+        }
+        .footer {
+            margin-top: 40px;
+            position: relative;
+        }
+        .footer-text {
+            text-align: right;
+            margin-right: 120px;
+        }
+        .stamp-space {
+            text-align: right;
+        }
+        .stamp-space img {
+            max-height: 200px;
+            margin-right: 250px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>F5 Consultoria e Soluções</h1>
+        <strong>
+        <p>Av. Nilo Peçanha ,495, loja 2</p>
+        <p>Centro – ARARUAMA – RJ CEP: 28979-285
+        </p>
+        <p>CNPJ:37.490.691/0001-69</p>
+        </strong>
+    </div>
+    <div class="content">
+        <div class="conditions">
+            <p><strong>Valor Total:</strong> <span id="totalValue">R$ 0,00</span></p>
+            <p><strong>Condições de Pagamento:</strong> À vista</p>
+            <p><strong>Prazo de Entrega:</strong> Imediato</p>
+            <p><strong>Validade do Orçamento:</strong> 30 dias</p>
+        </div>
+        
+    <h2>Itens do Orçamento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <!-- Itens serão carregados aqui -->
+        </tbody>
+    </table>
+    </div>
+
+    <div class="footer-text">
+        <p><strong>Araruama, <span id="formattedDate"></span></strong></p>
+        <div class="stamp-space">
+            <img src="./carimbos/f5.png" alt="Carimbo">
+        </div>
+    </div>
+    
+    <script>
+        // Recupera a data do localStorage
+        const budgetDate = localStorage.getItem('budgetDate');
+        if (budgetDate) {
+            document.getElementById('formattedDate').textContent = budgetDate;
+        }
+    </script>
+    
+
+    <script src="/scriptorc.js"></script>
+</body>
+</html>

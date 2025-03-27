@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARCIA SOARES RIOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+        .header, .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: teal;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: #ffffff;
+        }
+        .header p {
+            text-align: center;
+            
+        }
+        .content {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        table {
+            margin: auto;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px, dashed;
+            padding: 5px;
+            text-align: left;
+        }
+        
+        .footer-text {
+            text-align: center;
+            
+        }
+        .stamp-space {
+            text-align: right;
+        }
+        .stamp-space img {
+            max-height: 200px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MARCIA SOARES RIOS</h1>
+        <strong>
+        <p>RUA ANTENOR SOARES,08 , S:0642 Q.:12 CENTRO 
+        <br>PARQUE MATARUNA –ARARUAMA-RJ- <br> CEP:28979-735</p>
+        <p>CNPJ:36.367.135/0001-37</p>
+        </strong>
+    </div>
+    <div class="content">
+        <div class="conditions">
+            <p><strong>Valor Total:</strong> <span id="totalValue">R$ 0,00</span></p>
+            <p><strong>Condições de Pagamento:</strong> À vista</p>
+            <p><strong>Prazo de Entrega:</strong> Imediato</p>
+            <p><strong>Validade do Orçamento:</strong> 30 dias</p>
+        </div>
+        
+    <h2>Itens do Orçamento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <!-- Itens serão carregados aqui -->
+        </tbody>
+    </table>
+    </div>
+
+    <div class="footer-text">
+        <p><strong>Araruama, <span id="formattedDate"></span></strong></p>
+        <div class="stamp-space">
+            <img src="./carimbos/marcia.png" alt="Carimbo">
+        </div>
+    </div>
+    
+    <script>
+        // Recupera a data do localStorage
+        const budgetDate = localStorage.getItem('budgetDate');
+        if (budgetDate) {
+            document.getElementById('formattedDate').textContent = budgetDate;
+        }
+    </script>
+    
+
+    <script src="/scriptorc.js"></script>
+</body>
+</html>

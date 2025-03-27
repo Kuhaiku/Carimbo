@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Raposo Boechat</title>
+    <style>
+     body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        .header, .footer {
+            text-align: center;
+            padding: 10px;
+        }
+        .header p {
+            text-align: left;
+            padding-left: 10%;
+        }
+        .header img {
+            max-height: 80px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .conditions {
+            margin-left: 50px;
+        }
+        .conditions, .table-section, .footer {
+            margin-top: 20px;
+        }
+        table {
+            margin: auto;
+            width: 80%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        .footer {
+            margin-top: 40px;
+            position: relative;
+        }
+        .footer-text {
+            text-align: left;
+            margin-left: 120px;
+        }
+        .stamp-space {
+            text-align: right;
+        }
+        .stamp-space img {
+            max-height: 150px;
+            margin-right: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gabriel Raposo Boechat</h1>
+        <strong>
+        <p>ENDEREÇO: R. Avenida John Kennedy</p>
+        <p>BAIRRO: CENTRO – ARARUAMA – RJ CEP: 28970-000</p>
+        <p>CNPJ:38.133.177/0001-39</p>
+        </strong>
+    </div>
+    <div class="content">
+        <div class="conditions">
+            <p><strong>Valor Total:</strong> <span id="totalValue">R$ 0,00</span></p>
+            <p><strong>Condições de Pagamento:</strong> À vista</p>
+            <p><strong>Prazo de Entrega:</strong> Imediato</p>
+            <p><strong>Validade do Orçamento:</strong> 30 dias</p>
+        </div>
+        
+    <h2>Itens do Orçamento</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Quantidade</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+            <!-- Itens serão carregados aqui -->
+        </tbody>
+    </table>
+    </div>
+
+    <div class="footer-text">
+        <p><strong>Araruama, <span id="formattedDate"></span></strong></p>
+        <div class="stamp-space">
+            <img src="./carimbos/gabriel.jpg" alt="Carimbo">
+        </div>
+    </div>
+    
+    <script>
+        // Recupera a data do localStorage
+        const budgetDate = localStorage.getItem('budgetDate');
+        if (budgetDate) {
+            document.getElementById('formattedDate').textContent = budgetDate;
+        }
+    </script>
+    
+
+    <script src="/scriptorc.js"></script>
+</body>
+</html>
