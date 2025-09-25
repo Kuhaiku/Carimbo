@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="companyTitle">Orçamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1 id="companyName"></h1>
+        <strong>
+            <p id="companyAddress"></p>
+            <p id="companyCity"></p>
+            <p id="companyCnpj"></p>
+        </strong>
+    </div>
+    <div class="content">
+        <div class="conditions">
+            <p><strong>Valor Total:</strong> <span id="totalValue">R$ 0,00</span></p>
+            <p><strong>Condições de Pagamento:</strong> À vista</p>
+            <p><strong>Prazo de Entrega:</strong> Imediato</p>
+            <p><strong>Validade do Orçamento:</strong> 30 dias</p>
+        </div>
+        <h2>Itens do Orçamento</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantidade</th>
+                    <th>Descrição</th>
+                    <th>Valor Unitário</th>
+                    <th>Valor Total</th>
+                </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+                </tbody>
+        </table>
+    </div>
+    <div class="footer-text">
+        <p><strong>Araruama, <span id="formattedDate"></span></strong></p>
+        <div class="stamp-space">
+            <img id="companyStamp" alt="Carimbo">
+        </div>
+    </div>
+    <script src="/company_data.js"></script>
+    <script src="/scriptorc.js"></script>
+</body>
+</html>

@@ -4,135 +4,171 @@ let budgetDate = '';
 function addItem() {
     const quantity = parseFloat(document.getElementById('quantity').value);
     const description = document.getElementById('description').value;
-    const unitPrice = parseFloat(document.getElementById('unitPrice').value);
+    const unitPriceWinner = parseFloat(document.getElementById('unitPriceWinner').value);
+    const unitPrice2 = parseFloat(document.getElementById('unitPrice2').value);
+    const unitPrice3 = parseFloat(document.getElementById('unitPrice3').value);
 
-    if (isNaN(quantity) || quantity <= 0 || isNaN(unitPrice) || unitPrice <= 0 || description.trim() === "") {
+    if (isNaN(quantity) || quantity <= 0 || isNaN(unitPriceWinner) || isNaN(unitPrice2) || isNaN(unitPrice3) || description.trim() === "") {
         alert("Preencha todos os campos corretamente.");
         return;
     }
 
-    const totalPrice = quantity * unitPrice;
+    const totalPriceWinner = quantity * unitPriceWinner;
+    const totalPrice2 = quantity * unitPrice2;
+    const totalPrice3 = quantity * unitPrice3;
 
-    // Adiciona item ao array
-    const item = { quantity, description, unitPrice, totalPrice };
+    const item = {
+        quantity,
+        description,
+        unitPrices: {
+            winner: unitPriceWinner,
+            budget2: unitPrice2,
+            budget3: unitPrice3
+        },
+        totalPrices: {
+            winner: totalPriceWinner,
+            budget2: totalPrice2,
+            budget3: totalPrice3
+        }
+    };
     items.push(item);
-
-    // Atualiza a tabela
     updateTable();
-
-    // Limpa os campos
+    
     document.getElementById('quantity').value = '';
     document.getElementById('description').value = '';
-    document.getElementById('unitPrice').value = '';
+    document.getElementById('unitPriceWinner').value = '';
+    document.getElementById('unitPrice2').value = '';
+    document.getElementById('unitPrice3').value = '';
 }
 
 function updateTable() {
     const tableBody = document.getElementById('itemsTable').querySelector('tbody');
     tableBody.innerHTML = '';
-
-    const formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
+    const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
     items.forEach((item, index) => {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td>${item.quantity}</td>
+            <td><span class="view-quantity">${item.quantity}</span><input type="number" class="edit-quantity" value="${item.quantity}" style="width: 80px; display:none;"></td>
             <td>${item.description}</td>
+            <td><span class="view-price" data-type="winner">${formatter.format(item.unitPrices.winner)}</span><input type="number" class="edit-price" data-type="winner" value="${item.unitPrices.winner}" style="width: 80px; display:none;"></td>
+            <td><span class="view-price" data-type="budget2">${formatter.format(item.unitPrices.budget2)}</span><input type="number" class="edit-price" data-type="budget2" value="${item.unitPrices.budget2}" style="width: 80px; display:none;"></td>
+            <td><span class="view-price" data-type="budget3">${formatter.format(item.unitPrices.budget3)}</span><input type="number" class="edit-price" data-type="budget3" value="${item.unitPrices.budget3}" style="width: 80px; display:none;"></td>
             <td>
-                <span id="unitPrice-${index}">${formatter.format(item.unitPrice)}</span>
-                <input 
-                    id="editUnitPrice-${index}" 
-                    type="number" 
-                    value="${item.unitPrice}" 
-                    style="display: none; width: 80px;"
-                />
-                <button onclick="editItem(${index})">Editar</button>
+                <button class="btn edit-btn" data-index="${index}">Editar</button>
+                <button class="btn remove-btn" data-index="${index}">Remover</button>
             </td>
-            <td id="totalPrice-${index}">${formatter.format(item.totalPrice)}</td>
-            <td><button class="btn" onclick="removeItem(${index})">Remover</button></td>
         `;
         tableBody.appendChild(newRow);
     });
+
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const index = event.target.dataset.index;
+            toggleEdit(index, event.target);
+        });
+    });
+
+    document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const index = event.target.dataset.index;
+            removeItem(index);
+        });
+    });
 }
 
-function editItem(index) {
-    const priceSpan = document.getElementById(`unitPrice-${index}`);
-    const priceInput = document.getElementById(`editUnitPrice-${index}`);
+function toggleEdit(index, button) {
+    const row = button.closest('tr');
+    const item = items[index];
 
-    if (priceSpan.style.display === 'none') {
-        // Atualiza o valor e recalcula o total
-        const newPrice = parseFloat(priceInput.value);
-        if (isNaN(newPrice) || newPrice <= 0) {
-            alert("Por favor, insira um valor válido.");
+    if (button.textContent === 'Salvar') {
+        const newQuantity = parseFloat(row.querySelector('.edit-quantity').value);
+        const newPriceWinner = parseFloat(row.querySelector('.edit-price[data-type="winner"]').value);
+        const newPrice2 = parseFloat(row.querySelector('.edit-price[data-type="budget2"]').value);
+        const newPrice3 = parseFloat(row.querySelector('.edit-price[data-type="budget3"]').value);
+        
+        if (isNaN(newQuantity) || isNaN(newPriceWinner) || isNaN(newPrice2) || isNaN(newPrice3) || newQuantity <= 0) {
+            alert("Por favor, insira valores válidos.");
             return;
         }
-        items[index].unitPrice = newPrice;
-        items[index].totalPrice = items[index].quantity * newPrice;
 
-        // Atualiza a tabela
+        item.quantity = newQuantity;
+        item.unitPrices.winner = newPriceWinner;
+        item.unitPrices.budget2 = newPrice2;
+        item.unitPrices.budget3 = newPrice3;
+
+        item.totalPrices.winner = item.quantity * newPriceWinner;
+        item.totalPrices.budget2 = item.quantity * newPrice2;
+        item.totalPrices.budget3 = item.quantity * newPrice3;
+        
         updateTable();
+        button.textContent = 'Editar';
+
     } else {
-        // Mostra o campo de edição
-        priceSpan.style.display = 'none';
-        priceInput.style.display = 'inline-block';
-        priceInput.focus();
+        row.querySelectorAll('.view-quantity, .view-price').forEach(span => {
+            span.style.display = 'none';
+        });
+        row.querySelectorAll('.edit-quantity, .edit-price').forEach(input => {
+            input.style.display = 'inline-block';
+        });
+        
+        button.textContent = 'Salvar';
     }
 }
 
+
 function removeItem(index) {
-    // Remove o item pelo índice
     items.splice(index, 1);
     updateTable();
 }
 
-// function generateBudget() {
-//     // Obtém a data do orçamento
-//     const dateInput = document.getElementById('budgetDate').value;
-//     if (!dateInput) {
-//         alert("Por favor, informe a data do orçamento.");
-//         return;
-//     }
-
-//     // Formata a data no padrão "4 de dezembro de 2024"
-//     const date = new Date(dateInput);
-//     const options = { day: 'numeric', month: 'long', year: 'numeric' };
-//     budgetDate = new Intl.DateTimeFormat('pt-BR', options).format(date);
-
-//     // Salva os itens e a data no localStorage
-//     localStorage.setItem('budgetItems', JSON.stringify(items));
-//     localStorage.setItem('budgetDate', budgetDate);
-
-//     // Obtém a página selecionada no momento
-//     const pagina = document.getElementById('select-page').value;
-
-//     // Abre a página do orçamento
-//     window.open(pagina, '_blank');
-// }
 function generateBudget() {
-    // Obtém a data do orçamento
     const dateInput = document.getElementById('budgetDate').value;
     if (!dateInput) {
         alert("Por favor, informe a data do orçamento.");
         return;
     }
-
-    // Corrige a data para o fuso horário local
-    const dateParts = dateInput.split('-'); // Divide o formato ISO em [ano, mês, dia]
-    const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // Mês é indexado em 0
-
-    // Formata a data no padrão "4 de dezembro de 2024"
+    const dateParts = dateInput.split('-');
+    const date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     budgetDate = new Intl.DateTimeFormat('pt-BR', options).format(date);
 
-    // Salva os itens e a data no localStorage
-    localStorage.setItem('budgetItems', JSON.stringify(items));
+    const winnerItems = items.map(item => ({
+        quantity: item.quantity,
+        description: item.description,
+        unitPrice: item.unitPrices.winner,
+        totalPrice: item.totalPrices.winner
+    }));
+
+    const budget2Items = items.map(item => ({
+        quantity: item.quantity,
+        description: item.description,
+        unitPrice: item.unitPrices.budget2,
+        totalPrice: item.totalPrices.budget2
+    }));
+
+    const budget3Items = items.map(item => ({
+        quantity: item.quantity,
+        description: item.description,
+        unitPrice: item.unitPrices.budget3,
+        totalPrice: item.totalPrices.budget3
+    }));
+
+    localStorage.setItem('budgetItems_winner', JSON.stringify(winnerItems));
+    localStorage.setItem('budgetItems_2', JSON.stringify(budget2Items));
+    localStorage.setItem('budgetItems_3', JSON.stringify(budget3Items));
     localStorage.setItem('budgetDate', budgetDate);
 
-    // Obtém a página selecionada no momento
-    const pagina = document.getElementById('select-page').value;
+    const winnerPage = document.getElementById('select-page-winner').value;
+    const page2 = document.getElementById('select-page-2').value;
+    const page3 = document.getElementById('select-page-3').value;
 
-    // Abre a página do orçamento
-    window.open(pagina, '_blank');
+    window.open(`${winnerPage}?budget=winner`, '_blank');
+    window.open(`${page2}?budget=2`, '_blank');
+    window.open(`${page3}?budget=3`, '_blank');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('addItemBtn').addEventListener('click', addItem);
+    document.getElementById('generateBudgetBtn').addEventListener('click', generateBudget);
+});
